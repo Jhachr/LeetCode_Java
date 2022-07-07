@@ -38,4 +38,31 @@ public class addTwo {
 
         return startNode.next;
     }
+
+
+    public ListNode addTwoNumbersMethod2(ListNode l1, ListNode l2) {
+        ListNode pre = new ListNode(-1);
+        ListNode now = pre;
+        int carry = 0 ;
+        while (l1!=null || l2!= null){
+            ListNode newNode = new ListNode();
+            int l1Val = Objects.nonNull(l1) ? l1.val : 0;
+            int l2Val = Objects.nonNull(l2) ? l2.val : 0;
+            int sum = l1Val + l2Val + carry;
+            newNode.val  = sum%10;
+            carry = sum/10;
+            now.next = newNode;
+            if (Objects.nonNull(l1)){
+                l1 = l1.next;
+            }
+            if (Objects.nonNull(l2)){
+                l2 = l2.next;
+            }
+        }
+        if (carry == 1){
+            now.next = new ListNode(1);
+        }
+        return pre.next;
+    }
+
 }
