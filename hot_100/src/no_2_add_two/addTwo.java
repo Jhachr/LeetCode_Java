@@ -17,7 +17,7 @@ public class addTwo {
         ListNode startNode = new ListNode(-1);
         ListNode now = startNode;
         int flag = 0;
-        while (Objects.nonNull(l1) && Objects.nonNull(l2)) {
+        if (Objects.nonNull(l1) && Objects.nonNull(l2)) {
             ListNode newNode = new ListNode();
             int sum = l1.val + l2.val + flag;
             newNode.val = sum % 10;
@@ -39,7 +39,12 @@ public class addTwo {
         return startNode.next;
     }
 
+    /*
+        对比方法1 这种方法其实抽象程度更高些
+        其实方法1中说的情况1跟情况3是同一种情况，无非情况3对应了
+        一个数字为0的节点跟另外一个正常节点相加，写法上更加优雅一些。
 
+     */
     public ListNode addTwoNumbersMethod2(ListNode l1, ListNode l2) {
         ListNode pre = new ListNode(-1);
         ListNode now = pre;
@@ -63,6 +68,28 @@ public class addTwo {
             now.next = new ListNode(1);
         }
         return pre.next;
+    }
+
+
+    public ListNode addTwoNumbersMethod3(ListNode l1, ListNode l2 ,int flag ) {
+        ListNode newNode = new ListNode();
+        if (Objects.nonNull(l1) || Objects.nonNull(l2)) {
+            int l1val = Objects.nonNull(l1) ? l1.val : 0 ;
+            int l2val = Objects.nonNull(l2) ? l2.val : 0 ;
+            int sum = l1val + l2val + flag;
+            newNode.val = sum % 10;
+            flag = sum / 10;
+            addTwoNumbersMethod3(Objects.nonNull(l1) ? l1.next : null ,Objects.nonNull(l2) ? l2.next : null,flag);
+        }
+        if (Objects.isNull(l1) && Objects.isNull(l2)){
+            if (flag == 1){
+                newNode = new ListNode(1);
+            }
+            return newNode;
+        }
+
+
+        return newNode;
     }
 
 }
